@@ -1,9 +1,9 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## Creates a matrix for further calucation of the inverse. This function checks to see
-## if the cached matrix inverse exists, otherwise it uses the setInv function
-## 
+## This function creates a matrix for calculation of the inverse. 
+## This returns a list for athe cacheSolve function.
+##
 makeCacheMatrix <- function(x = matrix()) {
   inv = NULL
   set = function(y) {
@@ -13,18 +13,21 @@ makeCacheMatrix <- function(x = matrix()) {
   get = function() x
   setinv = function(inverse) inv <<- inverse 
   getinv = function() inv
+  
   list(set=set, get=get, setinv=setinv, getinv=getinv)
 }
 
 
 
-## This function returns the inverse matrix of the data from makeCacheMatrix
-
+## This function uses makeCacheMatrix above and checks to see if the 
+## input matrix is cached and either returns the cached inverted 
+## matrix (inv) or computes it directly.
+##
 cacheSolve <- function(x, ...) {
   inv = x$getinv()
   
   if (!is.null(inv)){
-    message("Get cached data.")
+    message("Exists in cache...")
     return(inv)
   }
   
@@ -32,6 +35,5 @@ cacheSolve <- function(x, ...) {
   inv = solve(mat.data, ...)
   
   x$setinv(inv)
-  
   return(inv)
 }
