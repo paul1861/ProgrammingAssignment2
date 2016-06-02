@@ -5,7 +5,10 @@
 ## This returns a list for athe cacheSolve function.
 ##
 makeCacheMatrix <- function(x = matrix()) {
+  ## Set local variable inv to NULL
   inv = NULL
+  
+  ## Create the set, get, setinv, and getinv methods
   set = function(y) {
     x <<- y
     inv <<- NULL
@@ -24,13 +27,16 @@ makeCacheMatrix <- function(x = matrix()) {
 ## matrix (inv) or computes it directly.
 ##
 cacheSolve <- function(x, ...) {
+  ## Set the inv to the inverse of x using makeCacheMatrix
   inv = x$getinv()
   
+  ## If it already exists in cache, get it
   if (!is.null(inv)){
     message("Exists in cache...")
     return(inv)
   }
   
+  ## Otherwise, use solve to calculate inverse
   mat.data = x$get()
   inv = solve(mat.data, ...)
   
